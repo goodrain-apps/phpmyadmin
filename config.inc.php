@@ -34,7 +34,7 @@ for ($i = 1; isset($hosts[$i - 1]); $i++) {
         $cfg['Servers'][$i]['port'] = $_ENV['MYSQL_PORT'];
     }
     if (isset($_ENV['MYSQL_USER'])) {
-        $cfg['Servers'][$i]['auth_type'] = 'config';
+        $cfg['Servers'][$i]['auth_type'] = 'cookie';
         $cfg['Servers'][$i]['user'] = $_ENV['MYSQL_USER'];
         $cfg['Servers'][$i]['password'] = isset($_ENV['MYSQL_PASS']) ? $_ENV['MYSQL_PASS'] : null;
     } else {
@@ -42,7 +42,7 @@ for ($i = 1; isset($hosts[$i - 1]); $i++) {
     }
     $cfg['Servers'][$i]['connect_type'] = 'tcp';
     $cfg['Servers'][$i]['compress'] = false;
-    $cfg['Servers'][$i]['AllowNoPassword'] = true;
+    $cfg['Servers'][$i]['AllowNoPassword'] = false;
 }
 /* Uploads setup */
 $cfg['UploadDir'] = '';
