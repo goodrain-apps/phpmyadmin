@@ -15,7 +15,7 @@ RUN apk add --no-cache wget curl bash su-exec && \
 
 COPY phpmyadmin.keyring /
 
-ENV VERSION 4.6.3
+ENV VERSION 4.6.6
 ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
 
 RUN set -x \
