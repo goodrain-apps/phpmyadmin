@@ -1,17 +1,9 @@
-FROM alpine:latest
+FROM goodrainapps/alpine:3.6
 
 RUN apk add --no-cache php5-cli php5-mysqli php5-ctype php5-xml \
     php5-gd php5-zlib php5-bz2 php5-zip php5-openssl php5-curl \
     php5-opcache php5-json
 
-RUN apk add --no-cache tzdata libc6-compat && \
-       ln -s /lib /lib64 && \
-       cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-       echo "Asia/Shanghai" >  /etc/timezone && \
-       date && apk del --no-cache tzdata
-       
-RUN apk add --no-cache wget curl bash su-exec && \
-    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
 COPY phpmyadmin.keyring /
 
