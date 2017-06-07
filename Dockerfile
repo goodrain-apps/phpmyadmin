@@ -5,23 +5,15 @@ RUN apk add --no-cache php5-cli php5-mysqli php5-ctype php5-xml \
     php5-opcache php5-json
 
 
-COPY phpmyadmin.keyring /
-
-ENV VERSION 4.6.6
+ENV VERSION 4.7.1
 ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
 
-RUN set -x \
-    && export GNUPGHOME="$(mktemp -d)" \
-    && apk add --no-cache curl wget gnupg \
-    && curl --output phpMyAdmin.tar.gz --location $URL \
-    && curl --output phpMyAdmin.tar.gz.asc --location $URL.asc \
-    && gpgv --keyring /phpmyadmin.keyring phpMyAdmin.tar.gz.asc phpMyAdmin.tar.gz \
-    && apk del --no-cache gnupg \
-    && rm -rf "$GNUPGHOME" \
-    && tar xzf phpMyAdmin.tar.gz \
-    && rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc \
-    && mv phpMyAdmin* /www \
-    && rm -rf /www/js/jquery/src/ /www/examples /www/po/
+RUN set -x  && \
+    curl --output phpMyAdmin.tar.gz --location $URL && \
+    tar xzf phpMyAdmin.tar.gz && \
+    rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc && \
+    mv phpMyAdmin* /www && \
+    rm -rf /www/js/jquery/src/ /www/examples /www/po/
 
 COPY config.inc.php /www/
 COPY docker-entrypoint.sh /docker-entrypoint.sh
