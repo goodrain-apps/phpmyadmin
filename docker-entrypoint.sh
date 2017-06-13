@@ -9,14 +9,27 @@ if [ ! -f /www/config.secret.inc.php ] ; then
 EOT
 fi
 
-if [ ! -f /config.user.inc.php ] ; then
-  touch /config.user.inc.php
+echo -e "Start php-fpm in background."
+php-fpm
+
+
+TIMEOUT=${TIMEOUT:-30}
+while [ $TIMEOUT -gt 0 ]
+do
+    nc -w 1  ${MYSQL_HOST:-127.0.0.1} ${MYSQL_PORT:-3306} 2>&1 >/dev/null
+    if [ $? -eq 0 ];then
+        echo "MySQL service connect ok."
+        break
+    fi
+    echo "Waiting MySQL service $TIMEOUT seconds"
+    TIMEOUT=`expr $TIMEOUT - 1`;
+    sleep 1
+done
+
+if [ $TIMEOUT -eq 0 ]; then
+	echo >&2 'Start failed,please ensure mysql service has started.'
+	exit 1
+else
+  echo -e "Start nginx in foreground...\n"
+  nginx -g 'daemon off;'
 fi
-
-sleep ${PAUSE:-0}
-
-exec php -S 0.0.0.0:80 -t /www/ \
-    -d upload_max_filesize=$PHP_UPLOAD_MAX_FILESIZE \
-    -d post_max_size=$PHP_UPLOAD_MAX_FILESIZE \
-    -d max_input_vars=$PHP_MAX_INPUT_VARS \
-    -d session.save_path=/dev/shm
