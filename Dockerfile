@@ -1,26 +1,37 @@
 FROM goodrainapps/alpine:3.6
 
-ENV VERSION 4.7.1
-ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
-
+# install nginx and php
 RUN set -x \
-    && apk add --no-cache php5 php5-fpm php5-pdo php5-pdo_mysql php5-json php5-opcache nginx \
+    && apk add --no-cache \
+               php5 \
+               php5-cli \
+               php5-fpm \
+               php5-pdo \
+               php5-pdo_mysql \
+               php5-mysqli \
+               php5-json \
+               php5-opcache \
+               nginx \
     && mkdir /run/nginx/ -pv
-    && curl --output phpMyAdmin.tar.gz --location $URL && \
-    && tar xzf phpMyAdmin.tar.gz && \
-    && rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc && \
-    && mv phpMyAdmin* /www && \
-    && rm -rf /www/js/jquery/src/ /www/examples /www/po/
+
+# prepare phpmyadmin package
+ENV PMA_VER 4.7.1
+ENV PMA_URL https://files.phpmyadmin.net/phpMyAdmin/${PMA_VER}/phpMyAdmin-${PMA_VER}-all-languages.tar.gz
+ENV PMA_SHA256 de1f4a9c1f917ae63b07be4928d9b9dba7f29c51b1e1be3ed351d1bc278a8b28
+
+RUN mkdir /app \
+    && curl -o /tmp/phpmyadmin.tar.gz -L ${PMA_URL} \
+    && cd /tmp/ \
+    && echo "$PMA_SHA256  phpmyadmin.tar.gz" | sha256sum -c - \
+    && tar xzf phpmyadmin.tar.gz \
+    && mv phpMyAdmin* /app/phpmyadmin \
+    && rm phpmyadmin.tar.gz
 
 COPY etc etc
-COPY config.inc.php /www/
+COPY config.inc.php /app/phpmyadmin/
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod u+rwx /docker-entrypoint.sh
-
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
-
-ENV PHP_UPLOAD_MAX_FILESIZE=64M \
-    PHP_MAX_INPUT_VARS=2000
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

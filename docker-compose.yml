@@ -1,0 +1,16 @@
+version: "2"
+services:
+  zentao:
+    image: zentao
+    container_name: zentao
+    ports:
+      - 8080:80
+    links:
+      - mysql
+  mysql:
+    image: mysql
+    container_name: mysql
+    volumes:
+      - /tmp/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
