@@ -1,5 +1,6 @@
-#!/bin/sh
-set -x
+#!/bin/bash
+
+[ $DEBUG ]  && set -x
 
 if [ ! -f /www/config.secret.inc.php ] ; then
     cat > /www/config.secret.inc.php <<EOT
@@ -11,6 +12,8 @@ fi
 if [ ! -f /config.user.inc.php ] ; then
   touch /config.user.inc.php
 fi
+
+sleep ${PAUSE:-0}
 
 exec php -S 0.0.0.0:80 -t /www/ \
     -d upload_max_filesize=$PHP_UPLOAD_MAX_FILESIZE \
