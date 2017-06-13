@@ -57,6 +57,8 @@ echo -e "Start php-fpm in background."
 php-fpm5
 
 
+sleep ${PAUSE:-0}
+
 TIMEOUT=${TIMEOUT:-30}
 while [ $TIMEOUT -gt 0 ]
 do
