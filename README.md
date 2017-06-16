@@ -14,13 +14,13 @@
 
 # About this image
 
-This images base alpine system ,can be installed in Goodrain [ACM](http://app.goodrain.com/group/detail/11/). Fully compatible with the Goodrain [ACP](https://www.goodrain.com/ACP.html) platform.
+This images base alpine system ,can be installed in Goodrain [ACM](https://app.goodrain.com/group/detail/13/). Fully compatible with the Goodrain [ACP](https://www.goodrain.com/ACP.html) platform.
 
 # How to use this image
 
 ## Via ACM install
 
-[![deploy to ACP](http://ojfzu47n9.bkt.clouddn.com/20170603149649013919973.png)](http://app.goodrain.com/group/detail/11/)
+[![deploy to ACP](http://ojfzu47n9.bkt.clouddn.com/20170603149649013919973.png)](https://app.goodrain.com/group/detail/13/)
 
 
 
@@ -28,7 +28,7 @@ This images base alpine system ,can be installed in Goodrain [ACM](http://app.go
 
 ### Installation
 
-Automated builds of the image are available on [hub.docker.com](https://quay.io/repository/sameersbn/postgresql) and is the recommended method of installation.
+Automated builds of the image are available on [hub.docker.com](https://hub.docker.com/r/goodrainapps/phpmyadmin/) and is the recommended method of installation.
 
 ```bash
 docker pull goodrainapps/phpmyadmin
@@ -39,7 +39,7 @@ Alternately you can build the image yourself.
 ```bash
 git clone https://github.com/goodrain-apps/phpmyadmin.git
 cd phpmyadmin
-make 
+make
 ```
 
 ### Quick Start
@@ -97,4 +97,3 @@ docker run -d --name phpmyadmin \
 -e DEBUG=1 \
 goodrainapps/phpmyadmin
 ```
-
