@@ -14,7 +14,7 @@
 
 # About this image
 
-This images base alpine system ,can be installed in Goodrain [ACM](https://app.goodrain.com/group/detail/13/). Fully compatible with the Goodrain [ACP](https://www.goodrain.com/ACP.html) platform.
+This images base alpine system ,can be installed in Goodrain [ACM](https://www.goodrain.com/ACM.html). Fully compatible with the Goodrain [ACP](https://www.goodrain.com/ACP.html) platform.
 
 # How to use this image
 
